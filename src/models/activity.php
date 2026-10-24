@@ -12,9 +12,14 @@ class Activity {
     $stmt = $db->prepare($sql);
     $stmt->bind_param("issi", $userId, $activityName, $activityDate, $activityLength);
     $result = $stmt->execute();
+    $newId = $db->insert_id;
     $stmt->close();
     $db->close();
-    return $result;
+    if ($result) {
+        return $newId;
+    } else {
+        return null;
+    }
   }
 
   public static function updateActivity(int $id, string $activityName, string $activityDate, int $activityLength) {

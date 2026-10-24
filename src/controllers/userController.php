@@ -79,18 +79,18 @@ class UserController {
     private function deleteUser() {
         $id = $_SESSION['user_id'] ?? '';
         if (empty($id)) {
-            $this->sendResponse(['error' => 'You are not logged in!'], 403);
+            $this->sendResponse(['error' => 'You are not logged in!'], 401);
         }
         $result = User::deleteUser($id);
         if ($result) {
             unset($_SESSION['user_id']);
             $this->sendResponse(['message' => 'Sucessfully deleted user!'], 200);
         } else {
-            $this->sendResponse(['error' => 'Failed to delete user.', 500]);
+            $this->sendResponse(['error' => 'Failed to delete user.'], 500);
         }
     }
 
-    private function sendResponse($data, int $statusCode) {
+    private function sendResponse(mixed $data, int $statusCode) {
         http_response_code($statusCode);
         header('Content-Type: application/json');
         echo json_encode($data);

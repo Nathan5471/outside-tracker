@@ -14,5 +14,9 @@ if ($requestUrl === '/signup') {
     require_once __DIR__ . '/../src/controllers/userController.php';
     $userController = new UserController();
     $userController->index();
+} else if (str_starts_with($requestUrl, '/api/activities/')) {
+    require_once __DIR__ . '/../src/controllers/activityController.php';
+    $activityController = new ActivityController();
+    $activityController->index();
 }
 ?>
