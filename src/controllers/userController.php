@@ -24,15 +24,17 @@ class UserController {
         $username = $body['username'] ?? '';
         $password = $body['password'] ?? '';
         if (empty($username) || empty($password)) {
-            echo "Username and password are required.";
-            return;
+            $this->sendResponse(['error' => 'Username and password are required.'], 400);
+        }
+        if (User::getUserByUsername($username)) {
+            $this->sendResponse(['error' => 'Username already exists.'], 400);
         }
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $result = User::createUser($username, $hashedPassword);
         if ($result) {
-            echo "User created successfully!";
+            $this->sendResponse(['message' => 'User created successfully!'], 201);
         } else {
-            echo "Failed to create user.";
+            $this->sendResponse(['error' => 'Failed to create user.'], 500);
         }
     }
 
@@ -41,23 +43,21 @@ class UserController {
         $username = $body['username'] ?? '';
         $password = $body['password'] ?? '';
         if (empty($username) || empty($password)) {
-            echo "Username and password are required.";
-            return;
+            $this->sendResponse(['error' => 'Username and password are required.'], 400);
         }
         $user = User::getUserByUsername($username);
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            echo "Login successful!";
+            $this->sendResponse(['message' => 'Logged in sucessfully!'], 200);
         } else {
-            echo "Invalid username or password.";
+            $this->sendResponse(['error' => 'Username or password is incorrect.'], 401);
         }
     }
 
     private function getUserById() {
         $id = $_GET['id'] ?? '';
         if (empty($id)) {
-            echo "User ID is required.";
-            return;
+            $this->sendResponse(['error' => 'User ID is required.'], 400);
         }
         $user = User::getUserById($id);
         if ($user) {
@@ -65,30 +65,36 @@ class UserController {
                 'id' => $user['id'],
                 'username' => $user['username']
             ];
-            echo json_encode($cleanUser);
+            $this->sendResponse($cleanUser, 200);
         } else {
-            echo "User not found.";
+            $this->sendResponse(['error' => 'User not found.'], 404);
         }
     }
 
     private function logout() {
         unset($_SESSION['user_id']);
-        echo "Logout successful!";
+        $this->sendResponse(['message' => 'Logged out sucessfully!'], 200);
     }
 
     private function deleteUser() {
         $id = $_SESSION['user_id'] ?? '';
         if (empty($id)) {
-            echo "User ID is required.";
-            return;
+            $this->sendResponse(['error' => 'You are not logged in!'], 403);
         }
         $result = User::deleteUser($id);
         if ($result) {
-            echo "User deleted successfully!";
             unset($_SESSION['user_id']);
+            $this->sendResponse(['message' => 'Sucessfully deleted user!'], 200);
         } else {
-            echo "Failed to delete user.";
+            $this->sendResponse(['error' => 'Failed to delete user.', 500]);
         }
+    }
+
+    private function sendResponse($data, int $statusCode) {
+        http_response_code($statusCode);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        exit;
     }
 }
 ?>

@@ -12,6 +12,7 @@
             <input type="text" id="username" name="username" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <p id="errorMessage"></p>
             <button type="submit">Login</button>
         </form>
     </body>
@@ -26,7 +27,12 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
             });
-            console.log(response);
+            const data = await response.json();
+            if (response.ok) {
+                window.location = "/"
+            } else {
+                document.getElementById('errorMessage').textContent = data.error || "An unknown error occured.";
+            }
         })
     </script>
 </html>
