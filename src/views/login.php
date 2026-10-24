@@ -4,6 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Outside Tracker | Login</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/auth.css">
     </head>
     <body>
         <form id="loginForm">
@@ -14,6 +18,7 @@
             <input type="password" id="password" name="password" required>
             <p id="errorMessage"></p>
             <button type="submit">Login</button>
+            <p class="navigate">Already have an account? <a href="/login">Login!</a></p>
         </form>
     </body>
     <script>
