@@ -18,7 +18,7 @@
             <input type="password" id="password" name="password" required>
             <p id="errorMessage"></p>
             <button type="submit">Login</button>
-            <p class="navigate">Already have an account? <a href="/login">Login!</a></p>
+            <p class="navigate">Don't have an account? <a href="/signup">Signup!</a></p>
         </form>
     </body>
     <script>
