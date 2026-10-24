@@ -21,6 +21,15 @@ function getDatabaseConnection() {
         password VARCHAR(255) NOT NULL
     )";
     $connection->query($sql);
+    $sql = "CREATE TABLE IF NOT EXISTS activities (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        userId INT NOT NULL,
+        activityName VARCHAR(255) NOT NULL,
+        activityDate DATE NOT NULL,
+        activityLength INT NOT NULL,
+        FOREIGN KEY (userId) REFERENCES users(id)
+    )";
+    $connection->query($sql);
 
     return $connection;
 }

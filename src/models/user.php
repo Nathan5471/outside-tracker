@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../config/database.php';
 
 class User {
-  public static function createUser($username, $password) {
+  public static function createUser(string $username, string $password) {
     $db = getDatabaseConnection();
     if (!$db) {
         return null;
@@ -17,7 +17,7 @@ class User {
     return $result;
   }
 
-  public static function getUserById($id) {
+  public static function getUserById(int $id) {
     $db = getDatabaseConnection();
     if (!$db) {
         return null;
@@ -32,7 +32,7 @@ class User {
     return $result->fetch_assoc();
   }
 
-  public static function getUserByUsername($username) {
+  public static function getUserByUsername(string $username) {
     $db = getDatabaseConnection();
     if (!$db) {
         return null;
@@ -47,7 +47,7 @@ class User {
     return $result->fetch_assoc();
   }
 
-  public static function deleteUser($id) {
+  public static function deleteUser(int $id) {
     $db = getDatabaseConnection();
     if (!$db) {
         return null;
