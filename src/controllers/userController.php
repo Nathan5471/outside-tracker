@@ -6,15 +6,15 @@ class UserController {
         $requestUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-        if ($requestMethod === 'POST' && $requestUrl === '/signup') {
+        if ($requestMethod === 'POST' && $requestUrl === '/api/user/signup') {
             $this->handleSignup();
-        } else if ($requestMethod === 'POST' && $requestUrl === '/login') {
+        } else if ($requestMethod === 'POST' && $requestUrl === '/api/user/login') {
             $this->handleLogin();
-        } else if ($requestMethod === 'POST' && $requestUrl === '/logout') {
+        } else if ($requestMethod === 'POST' && $requestUrl === '/api/user/logout') {
             $this->logout();
-        } else if ($requestMethod === 'GET' && $requestUrl === '/user') {
+        } else if ($requestMethod === 'GET' && $requestUrl === '/api/user/user') {
             $this->getUserById();
-        } else if ($requestMethod === 'DELETE' && $requestUrl === '/user') {
+        } else if ($requestMethod === 'DELETE' && $requestUrl === '/api/user/user') {
             $this->deleteUser();
         }
     }
