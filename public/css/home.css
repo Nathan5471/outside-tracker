@@ -1,0 +1,10 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  background-color: #e6dfcd;
+  color: #333333;
+  font-family: "Bubblegum Sans", sans-serif;
+  font-style: normal;
+}

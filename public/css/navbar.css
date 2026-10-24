@@ -1,0 +1,29 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #816645;
+  padding: 10px 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 24px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav a.title {
+  font-size: 32px;
+}
+
+nav a.title:hover {
+  text-decoration: none;
+}
+
+.navRight {
+  margin-left: auto;
+}

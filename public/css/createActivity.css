@@ -1,0 +1,84 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  background-color: #e6dfcd;
+  color: #333333;
+  font-family: "Bubblegum Sans", sans-serif;
+  font-style: normal;
+}
+
+.createActivityContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #5c765e;
+}
+
+h1 {
+  text-align: center;
+  font-size: 48px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+label {
+  font-size: 24px;
+  margin-top: 5px;
+}
+
+input {
+  font-family: "Bubblegum Sans", sans-serif;
+  font-size: 24px;
+  color: #333333;
+  padding: 5px;
+  background-color: #8d9f8e;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  font-family: "Bubblegum Sans", sans-serif;
+  font-size: 24px;
+  color: #333333;
+  padding: 10px 20px;
+  margin: 0;
+  margin-top: 10px;
+  background-color: #8d9f8e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #b9c4ba;
+}
+
+#errorMessage {
+  font-size: 24px;
+  color: #cd1c18;
+  margin: 0;
+  margin-top: 5px;
+}
+
+.navigate {
+  font-size: 18px;
+}
+
+.navigate a {
+  text-decoration: none;
+  color: #333333;
+}
+
+.navigate a:hover {
+  text-decoration: underline;
+}
