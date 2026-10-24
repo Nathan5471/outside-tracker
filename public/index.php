@@ -10,7 +10,7 @@ if ($requestUrl === '/signup') {
     require_once __DIR__ . '/../src/views/signup.php';
 } else if ($requestUrl === '/login') {
     require_once __DIR__ . '/../src/views/login.php';
-} else if (str_starts_with($requestUrl, '/api/user/')) {
+} else if (str_starts_with($requestUrl, '/api/auth/')) {
     require_once __DIR__ . '/../src/controllers/userController.php';
     $userController = new UserController();
     $userController->index();

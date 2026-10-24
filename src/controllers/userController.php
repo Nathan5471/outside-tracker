@@ -6,22 +6,23 @@ class UserController {
         $requestUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-        if ($requestMethod === 'POST' && $requestUrl === '/api/user/signup') {
+        if ($requestMethod === 'POST' && $requestUrl === '/api/auth/signup') {
             $this->handleSignup();
-        } else if ($requestMethod === 'POST' && $requestUrl === '/api/user/login') {
+        } else if ($requestMethod === 'POST' && $requestUrl === '/api/auth/login') {
             $this->handleLogin();
-        } else if ($requestMethod === 'POST' && $requestUrl === '/api/user/logout') {
+        } else if ($requestMethod === 'POST' && $requestUrl === '/api/auth/logout') {
             $this->logout();
-        } else if ($requestMethod === 'GET' && $requestUrl === '/api/user/user') {
+        } else if ($requestMethod === 'GET' && $requestUrl === '/api/auth/user') {
             $this->getUserById();
-        } else if ($requestMethod === 'DELETE' && $requestUrl === '/api/user/user') {
+        } else if ($requestMethod === 'DELETE' && $requestUrl === '/api/auth/user') {
             $this->deleteUser();
         }
     }
 
     private function handleSignup() {
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
+        $body = json_decode(file_get_contents('php://input'), true);
+        $username = $body['username'] ?? '';
+        $password = $body['password'] ?? '';
         if (empty($username) || empty($password)) {
             echo "Username and password are required.";
             return;
@@ -29,7 +30,6 @@ class UserController {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $result = User::createUser($username, $hashedPassword);
         if ($result) {
-            $_SESSION['user_id'] = $result['id'];
             echo "User created successfully!";
         } else {
             echo "Failed to create user.";
@@ -37,8 +37,9 @@ class UserController {
     }
 
     private function handleLogin() {
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
+        $body = json_decode(file_get_contents('php://input'), true);
+        $username = $body['username'] ?? '';
+        $password = $body['password'] ?? '';
         if (empty($username) || empty($password)) {
             echo "Username and password are required.";
             return;
