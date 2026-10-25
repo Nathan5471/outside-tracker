@@ -1,3 +1,16 @@
+<?php
+    require_once __DIR__ . '/../models/activity.php';
+    require_once __DIR__ . '/../models/user.php';
+    $user = User::getUserById($_SESSION['user_id']);
+    if (!$user) {
+        unset($_SESSION['user_id']);
+        header('Location: /login');
+        exit;
+    }
+    $activities = Activity::getUserAcitivities($_SESSION['user_id']);
+    $activities = array_values($activities);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,31 +34,63 @@
         <div class="container">
             <div class="leftContainer">
                 <div class="activitiesList">
-                    <h2>Activities</h2>
-                    <div class="scrollableContainer">
-                        <?php
-                            require_once __DIR__ . '/../models/activity.php';
-                            require_once __DIR__ . '/../models/user.php';
-                            $user = User::getUserById($_SESSION['user_id']);
-                            if (!$user) {
-                                unset($_SESSION['user_id']);
-                                header('Location: /login');
-                                exit;
-                            }
-                            $activities = Activity::getUserAcitivities($_SESSION['user_id']);
-                            foreach ($activities as $activity) {
-                                echo "<a class=\"activity\" href=\"/activity/{$activity['id']}\">";
-                                echo "<p>{$activity['activityName']} ({$activity['activityDate']})</p>";
-                                echo "<p class='rightContent'>{$activity['activityLength']} hours</p>";
-                                echo '</a>';
-                            }
-                        ?>
+                    <div class="activitiesHeader">
+                        <h2>Activities</h2>
+                        <select id="sortActivities">
+                            <option value="none">Sort: None</option>
+                            <option value="a-z">Sort: A-Z</option>
+                            <option value="z-a">Sort: Z-A</option>
+                            <option value="newest">Sort: Newest</option>
+                            <option value="oldest">Sort: Oldest</option>
+                        </select>
+                    </div>
+                    <div class="scrollableContainer" id="activitiesList"></div>
                     </div>
                 </div>
             </div>
         </div>
     </body>
     <script>
+        let sort = "none";
+        const ogActivities = <?php echo json_encode($activities); ?>;
+        let activities = [...ogActivities];
+        displayActivities();
+
+        function displayActivities() {
+            const activityList = document.getElementById("activitiesList");
+            activityList.innerHTML = "";
+            activities.forEach(activity => {
+                const activityElement = document.createElement("a");
+                activityElement.className = "activity";
+                activityElement.href = `/activity/${activity.id}`;
+                activityElement.innerHTML = `
+                    <p>${activity.activityName} (${activity.activityDate})</p>
+                    <p class='rightContent'>${activity.activityLength} hours</p>
+                `;
+                activityList.appendChild(activityElement);
+            });
+            if (activities.length === 0) {
+                activityList.innerHTML = "<p>No activities found.</p>";
+            }
+        }
+
+        function sortActivities() {
+            sort = document.getElementById("sortActivities").value;
+            activities = [...ogActivities];
+            if (sort === "a-z") {
+                activities.sort((a, b) => a.activityName.localeCompare(b.activityName));
+            } else if (sort === "z-a") {
+                activities.sort((a, b) => b.activityName.localeCompare(a.activityName));
+            } else if (sort === "newest") {
+                activities.sort((a, b) => new Date(b.activityDate) - new Date(a.activityDate));
+            } else if (sort === "oldest") {
+                activities.sort((a, b) => new Date(a.activityDate) - new Date(b.activityDate));
+            }
+            displayActivities();
+        }
+
+        document.getElementById("sortActivities").addEventListener("change", sortActivities);
+
         document.getElementById("logoutButton").addEventListener("click", async function(event) {
             const response = await fetch("/api/auth/logout", {
                 method: "POST",
