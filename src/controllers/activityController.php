@@ -15,7 +15,7 @@ class ActivityController {
             $this->handleGetActivity();
         } else if ($requestMethod === 'GET' && $requestUrl === '/api/activities/user') {
             $this->handleGetUserActivities();
-        } else if ($requestMethod === 'DELETE' && $requestUrl === '/api/activities/delete') {
+        } else if ($requestMethod === 'DELETE' && str_starts_with($requestUrl, '/api/activities/delete/')) {
             $this->handleDeleteActivity();
         }
     }
@@ -114,7 +114,7 @@ class ActivityController {
 
     private function handleDeleteActivity() {
         $userId = $_SESSION['user_id'] ?? '';
-        $id = $_GET['id'] ?? '';
+        $id = preg_replace('/\/api\/activities\/delete\/(\d+)/', '$1', $_SERVER['REQUEST_URI']);
         if (empty($userId)) {
             $this->sendResponse(['error' => 'You are not logged in!'], 401);
         }
