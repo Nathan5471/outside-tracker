@@ -34,6 +34,14 @@ body {
   font-size: 24px;
 }
 
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+
 .activity a {
   display: flex;
   justify-content: center;
@@ -42,6 +50,8 @@ body {
   background-color: #8d9f8e;
   padding: 10px 20px;
   border-radius: 5px;
+  font-size: 24px;
+  width: 100%;
 }
 
 .activity a:hover {

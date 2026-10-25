@@ -41,6 +41,7 @@
                         echo "<input type='date' id='activityDate' name='activityDate' value='{$activity['activityDate']}' required>";
                         echo "<label for='activityLength'>Activity Length (hours):</label>";
                         echo "<input type='number' id='activityLength' name='activityLength' value='{$activity['activityLength']}' required>";
+                        echo "<p id='errorMessage'></p>";
                         echo "<div class='buttonContainer'>";
                         echo "<a href='/activity/{$activity['id']}'>Cancel</a>";
                         echo "<button type='submit'>Update</button>";
@@ -54,10 +55,10 @@
     <script>
         document.querySelector(".activity").onsubmit = async function(event) {
             event.preventDefault();
-            eventId = window.location.pathname.split('/').pop();
-            newEventName = document.getElementById("activityName").value;
-            newEventDate = document.getElementById("activityDate").value;
-            newEventLength = document.getElementById("activityLength").value;
+            const eventId = window.location.pathname.split('/').pop();
+            const newEventName = document.getElementById("activityName").value;
+            const newEventDate = document.getElementById("activityDate").value;
+            const newEventLength = document.getElementById("activityLength").value;
             const response = await fetch("/api/activities/update", {
                 method: "PUT",
                 headers: {
@@ -70,11 +71,32 @@
                     activityLength: newEventLength
                 })
             });
+            const data = await response.json();
             if (response.ok) {
                 window.location.href = "/activity/" + eventId;
             } else {
-                // Add error text above buttons
+                document.getElementById("errorMessage").textContent = data.error || "An unknown error occurred.";
             }
         }
+
+        document.querySelector(".deleteButton").addEventListener("click", async function(event) {
+            event.preventDefault();
+            const eventId = window.location.pathname.split('/').pop();
+            const response = await fetch("/api/activities/delete", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    activityId: eventId
+                })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                window.location.href = "/";
+            } else {
+                document.getElementById("errorMessage").textContent = data.error || "An unknown error occurred.";
+            }
+        })
     </script>
 </html>

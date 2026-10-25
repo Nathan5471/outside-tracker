@@ -36,7 +36,10 @@
                     } else {
                         echo "<h1>{$activity['activityName']}</h1>";
                         echo "<p>{$activity['activityDate']} | {$activity['activityLength']} hours</p>";
+                        echo "<div class='buttonContainer'>";
                         echo '<a href="/">Go to Home</a>';
+                        echo "<a href='/edit/{$activity['id']}'>Edit</a>";
+                        echo "</div>";
                     }
                 ?>
             </div>

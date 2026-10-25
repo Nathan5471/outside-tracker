@@ -101,3 +101,10 @@ body {
 .activity button.deleteButton:hover {
   background-color: #d2322f;
 }
+
+#errorMessage {
+  font-size: 24px;
+  color: #cd1c18;
+  margin: 0;
+  margin-top: 5px;
+}
