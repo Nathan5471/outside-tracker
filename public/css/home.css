@@ -32,11 +32,40 @@ body {
   width: 60%;
 }
 
+.activitiesHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .activitiesList h2 {
   font-size: 32px;
   margin: 0;
   margin-bottom: 10px;
-  text-align: center;
+}
+
+.activitiesHeader select {
+  appearance: base-select;
+  -webkit-appearance: base-select;
+  background-color: #8d9f8e;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 20px;
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Unforunately the great Firefox hasn't implented this, so I have to look at the white select menu :(*/
+.activitiesHeader select::picker(select) {
+  background-color: #8d9f8e;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 20px;
+  font-family: inherit;
+  color: inherit;
 }
 
 .scrollableContainer {
