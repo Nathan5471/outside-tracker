@@ -15,6 +15,7 @@
             <a href="/" class="title">Outside Tracker</a>
             <div class="navRight">
                 <a href="/create">Add Activity</a>
+                <button id="logoutButton">Logout</button>
             </div>
         </nav>
         <div class="createActivityContainer">
@@ -48,6 +49,20 @@
                 window.location.href = `/activity/${result.activityId}`;
             } else {
                 document.getElementById('errorMessage').textContent = result.error || 'An unknown error occurred';
+            }
+        })
+
+        document.getElementById("logoutButton").addEventListener("click", async function(event) {
+            const response = await fetch("/api/auth/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            if (response.ok) {
+                window.location.href = "/login";
+            } else {
+                alert("Failed to logout!");
             }
         })
     </script>

@@ -46,7 +46,7 @@ input {
   border-radius: 5px;
 }
 
-button {
+form button {
   font-family: "Bubblegum Sans", sans-serif;
   font-size: 24px;
   color: #333333;
@@ -59,7 +59,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+form button:hover {
   background-color: #b9c4ba;
 }
 

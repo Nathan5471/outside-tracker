@@ -7,9 +7,11 @@ nav {
 }
 
 nav a {
+  display: flex;
   text-decoration: none;
   color: inherit;
   font-size: 24px;
+  align-items: center;
 }
 
 nav a:hover {
@@ -25,5 +27,23 @@ nav a.title:hover {
 }
 
 .navRight {
+  display: flex;
+  flex-direction: row;
   margin-left: auto;
+  gap: 10px;
+}
+
+nav button {
+  background-color: #816645;
+  color: inherit;
+  font-family: inherit;
+  font-size: 24px;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+nav button:hover {
+  text-decoration: underline;
 }
