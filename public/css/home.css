@@ -8,3 +8,57 @@ body {
   font-family: "Bubblegum Sans", sans-serif;
   font-style: normal;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+.leftContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+}
+
+.activitiesList {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #5c765e;
+  width: 60%;
+}
+
+.activitiesList h2 {
+  font-size: 32px;
+  margin: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.scrollableContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  overflow-y: auto;
+  gap: 10px;
+}
+
+.activity {
+  display: flex;
+  flex-direction: row;
+  background-color: #8d9f8e;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.activity p {
+  font-size: 20px;
+}
+
+.rightContent {
+  margin-left: auto;
+}

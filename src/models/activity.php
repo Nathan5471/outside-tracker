@@ -62,7 +62,7 @@ class Activity {
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->fetch_assoc();
+    return $result;
   }
 
   public static function deleteActivity(int $id) {
