@@ -114,6 +114,7 @@ body {
   background-color: #5c765e;
   padding: 20px;
   border-radius: 10px;
+  margin-bottom: 30px;
 }
 
 .dailyPercent h2 {
@@ -141,4 +142,52 @@ body {
   background-color: #e1b124;
   height: 100%;
   border-radius: 10px;
+}
+
+.heatmap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #5c765e;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.heatmap h2 {
+  font-size: 32px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.heatmapGrid {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 5px;
+}
+
+.heatmapCell {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.level0 {
+  background-color: #8d9f8e;
+}
+
+.level1 {
+  background-color: #f8ecc8;
+}
+
+.level2 {
+  background-color: #f2dda1;
+}
+
+.level3 {
+  background-color: #eac866;
+}
+
+.level4 {
+  background-color: #e1b124;
 }

@@ -56,6 +56,10 @@
                     <p class="dailyPercentText">0%</p>
                     <p>Daily goal: 4 hours</p>
                 </div>
+                <div class="heatmap">
+                    <h2>Past 91 Days Heatmap</h2>
+                    <div class="heatmapGrid"></div>
+                </div>
             </div>
         </div>
     </body>
@@ -110,6 +114,35 @@
             document.querySelector(".dailyPercentText").textContent = `${dailyPercent}%`;
         }
         setDailyPercent();
+
+        function generateHeatmap() {
+            const heatmapGrid = document.querySelector(".heatmapGrid");
+            heatmapGrid.innerHTML = "";
+            const today = new Date();
+            for (let i = 90; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+                const cell = document.createElement("div");
+                cell.classList.add("heatmapCell");
+                heatmapGrid.appendChild(cell);
+                const datesActivities = activities.filter(activity => activity.activityDate === dateString);
+                const totalHours = datesActivities.reduce((sum, activity) => sum + activity.activityLength, 0);
+                if (totalHours === 0) {
+                    cell.classList.add("level0");
+                } else if (totalHours < 1) {
+                    cell.classList.add("level1");
+                } else if (totalHours < 2) {
+                    cell.classList.add("level2");
+                } else if (totalHours < 3) {
+                    cell.classList.add("level3");
+                } else {
+                    cell.classList.add("level4");
+                }
+            }
+        }
+        generateHeatmap();
+
         document.getElementById("sortActivities").addEventListener("change", sortActivities);
 
         document.getElementById("logoutButton").addEventListener("click", async function(event) {
