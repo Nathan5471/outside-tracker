@@ -22,6 +22,12 @@ if ($requestUrl === '/signup') {
         exit;
     }
     require_once __DIR__ . '/../src/views/createActivity.php';
+} else if (str_starts_with($requestUrl, '/activity/')) {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /login');
+        exit;
+    }
+    require_once __DIR__ . '/../src/views/activity.php';
 } else if (str_starts_with($requestUrl, '/api/auth/')) {
     require_once __DIR__ . '/../src/controllers/userController.php';
     $userController = new UserController();

@@ -27,6 +27,7 @@
                             require_once __DIR__ . '/../models/user.php';
                             $user = User::getUserById($_SESSION['user_id']);
                             if (!$user) {
+                                unset($_SESSION['user_id']);
                                 header('Location: /login');
                                 exit;
                             }
