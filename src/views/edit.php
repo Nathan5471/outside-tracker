@@ -51,4 +51,30 @@
             </form>
         </div>
     </body>
+    <script>
+        document.querySelector(".activity").onsubmit = async function(event) {
+            event.preventDefault();
+            eventId = window.location.pathname.split('/').pop();
+            newEventName = document.getElementById("activityName").value;
+            newEventDate = document.getElementById("activityDate").value;
+            newEventLength = document.getElementById("activityLength").value;
+            const response = await fetch("/api/activities/update", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    activityId: eventId,
+                    activityName: newEventName,
+                    activityDate: newEventDate,
+                    activityLength: newEventLength
+                })
+            });
+            if (response.ok) {
+                window.location.href = "/activity/" + eventId;
+            } else {
+                // Add error text above buttons
+            }
+        }
+    </script>
 </html>
