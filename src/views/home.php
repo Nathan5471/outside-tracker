@@ -45,7 +45,16 @@
                         </select>
                     </div>
                     <div class="scrollableContainer" id="activitiesList"></div>
+                </div>
+            </div>
+            <div class="rightContainer">
+                <div class="dailyPercent">
+                    <h2>Today's Activity</h2>
+                    <div class="dailyPercentContainer" id="dailyPercentContainer">
+                        <div class="dailyPercentProgress" id="dailyPercentProgress"></div>
                     </div>
+                    <p class="dailyPercentText">0%</p>
+                    <p>Daily goal: 4 hours</p>
                 </div>
             </div>
         </div>
@@ -89,6 +98,18 @@
             displayActivities();
         }
 
+        function setDailyPercent() {
+            const today = new Date();
+            const todayString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+            const todaysActivities = activities.filter(activity => {
+                return activity.activityDate === todayString;
+            })
+            const totalHours = todaysActivities.reduce((sum, activity) => sum + activity.activityLength, 0);
+            const dailyPercent = Math.floor((totalHours / 4) * 100); // Google only said 20 minutes per day, but that's for the weak
+            document.getElementById("dailyPercentProgress").style.width = `${dailyPercent}%`;
+            document.querySelector(".dailyPercentText").textContent = `${dailyPercent}%`;
+        }
+        setDailyPercent();
         document.getElementById("sortActivities").addEventListener("change", sortActivities);
 
         document.getElementById("logoutButton").addEventListener("click", async function(event) {
