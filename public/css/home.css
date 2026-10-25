@@ -51,8 +51,14 @@ body {
   display: flex;
   flex-direction: row;
   background-color: #8d9f8e;
+  text-decoration: none;
+  color: inherit;
   padding: 5px;
   border-radius: 5px;
+}
+
+.activity:hover {
+  background-color: #b9c4ba;
 }
 
 .activity p {

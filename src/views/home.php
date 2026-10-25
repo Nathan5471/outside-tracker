@@ -33,10 +33,10 @@
                             }
                             $activities = Activity::getUserAcitivities($_SESSION['user_id']);
                             foreach ($activities as $activity) {
-                                echo '<div class="activity">';
+                                echo "<a class=\"activity\" href=\"/activity/{$activity['id']}\">";
                                 echo "<p>{$activity['activityName']} ({$activity['activityDate']})</p>";
                                 echo "<p class='rightContent'>{$activity['activityLength']} hours</p>";
-                                echo '</div>';
+                                echo '</a>';
                             }
                         ?>
                     </div>
