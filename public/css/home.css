@@ -68,6 +68,21 @@ body {
   color: inherit;
 }
 
+#searchActivities {
+  margin: 10px 0;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  font-size: 20px;
+  font-family: inherit;
+  color: inherit;
+  background-color: #8d9f8e;
+}
+
+#searchActivities:focus {
+  outline: none;
+}
+
 .scrollableContainer {
   display: flex;
   flex-direction: column;

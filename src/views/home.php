@@ -44,6 +44,7 @@
                             <option value="oldest">Sort: Oldest</option>
                         </select>
                     </div>
+                    <input type="text" id="searchActivities" placeholder="Search activities...">
                     <div class="scrollableContainer" id="activitiesList"></div>
                 </div>
             </div>
@@ -66,13 +67,13 @@
     <script>
         let sort = "none";
         const ogActivities = <?php echo json_encode($activities); ?>;
-        let activities = [...ogActivities];
+        let searchedActivities = [...ogActivities];
         displayActivities();
 
         function displayActivities() {
             const activityList = document.getElementById("activitiesList");
             activityList.innerHTML = "";
-            activities.forEach(activity => {
+            searchedActivities.forEach(activity => {
                 const activityElement = document.createElement("a");
                 activityElement.className = "activity";
                 activityElement.href = `/activity/${activity.id}`;
@@ -82,30 +83,35 @@
                 `;
                 activityList.appendChild(activityElement);
             });
-            if (activities.length === 0) {
+            if (searchedActivities.length === 0) {
                 activityList.innerHTML = "<p>No activities found.</p>";
             }
         }
 
         function sortActivities() {
             sort = document.getElementById("sortActivities").value;
-            activities = [...ogActivities];
             if (sort === "a-z") {
-                activities.sort((a, b) => a.activityName.localeCompare(b.activityName));
+                searchedActivities.sort((a, b) => a.activityName.localeCompare(b.activityName));
             } else if (sort === "z-a") {
-                activities.sort((a, b) => b.activityName.localeCompare(a.activityName));
+                searchedActivities.sort((a, b) => b.activityName.localeCompare(a.activityName));
             } else if (sort === "newest") {
-                activities.sort((a, b) => new Date(b.activityDate) - new Date(a.activityDate));
+                searchedActivities.sort((a, b) => new Date(b.activityDate) - new Date(a.activityDate));
             } else if (sort === "oldest") {
-                activities.sort((a, b) => new Date(a.activityDate) - new Date(b.activityDate));
+                searchedActivities.sort((a, b) => new Date(a.activityDate) - new Date(b.activityDate));
             }
             displayActivities();
+        }
+
+        function searchActivities() {
+            const searchTerm = document.getElementById("searchActivities").value.toLowerCase();
+            searchedActivities = ogActivities.filter(activity => activity.activityName.toLowerCase().includes(searchTerm));
+            sortActivities();
         }
 
         function setDailyPercent() {
             const today = new Date();
             const todayString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-            const todaysActivities = activities.filter(activity => {
+            const todaysActivities = ogActivities.filter(activity => {
                 return activity.activityDate === todayString;
             })
             const totalHours = todaysActivities.reduce((sum, activity) => sum + activity.activityLength, 0);
@@ -126,7 +132,7 @@
                 const cell = document.createElement("div");
                 cell.classList.add("heatmapCell");
                 heatmapGrid.appendChild(cell);
-                const datesActivities = activities.filter(activity => activity.activityDate === dateString);
+                const datesActivities = ogActivities.filter(activity => activity.activityDate === dateString);
                 const totalHours = datesActivities.reduce((sum, activity) => sum + activity.activityLength, 0);
                 if (totalHours === 0) {
                     cell.classList.add("level0");
@@ -144,6 +150,7 @@
         generateHeatmap();
 
         document.getElementById("sortActivities").addEventListener("change", sortActivities);
+        document.getElementById("searchActivities").addEventListener("input", searchActivities);
 
         document.getElementById("logoutButton").addEventListener("click", async function(event) {
             const response = await fetch("/api/auth/logout", {
