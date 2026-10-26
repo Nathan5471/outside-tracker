@@ -1,14 +1,22 @@
 <?php
 
 function getDatabaseConnection() {
-    require_once __DIR__ . '/../vendor/autoload.php';
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-    $dotenv->load();
+    if (file_exists(__DIR__ . '/../env')) {
+        $file = file(__DIR__ . '/../env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($file as $line) {
+            list($key, $value) = explode('=', $line, 2);
+            $name = trim($key);
+            $value = trim($value);
+            if (!getenv($name)) {
+                putenv("$name=$value");
+            }
+        }
+    }
 
-    $serverName = $_ENV['SERVER_NAME'];
-    $username = $_ENV['USERNAME'];
-    $password = $_ENV['PASSWORD'];
-    $databaseName = $_ENV['DATABASE_NAME'];
+    $serverName = getenv('SERVER_NAME');
+    $username = getenv('USERNAME');
+    $password = getenv('PASSWORD');
+    $databaseName = getenv('DATABASE_NAME');
     $connection = new mysqli($serverName, $username, $password, $databaseName);
     if ($connection->connect_error) {
         die("Connection failed: " . $connection->connect_error);
