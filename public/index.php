@@ -16,6 +16,12 @@ if ($requestUrl === '/signup') {
         exit;
     }
     require_once __DIR__ . '/../src/views/home.php';
+} else if ($requestUrl === '/about') {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /login');
+        exit;
+    }
+    require_once __DIR__ . '/../src/views/about.php';
 } else if ($requestUrl === '/create') {
     if (!isset($_SESSION['user_id'])) {
         header('Location: /login');
