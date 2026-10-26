@@ -35,8 +35,11 @@ body {
 .activitiesHeader {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+}
+
+.leftAuto {
+  margin-left: auto;
 }
 
 .activitiesList h2 {
@@ -66,6 +69,21 @@ body {
   font-size: 20px;
   font-family: inherit;
   color: inherit;
+}
+
+.exportButton {
+  margin-left: 5px;
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 20px;
+  background-color: #8d9f8e;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.exportButton:hover {
+  background-color: #b9c4ba;
 }
 
 #searchActivities {

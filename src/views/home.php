@@ -36,13 +36,14 @@
                 <div class="activitiesList">
                     <div class="activitiesHeader">
                         <h2>Activities</h2>
-                        <select id="sortActivities">
+                        <select id="sortActivities" class="leftAuto">
                             <option value="none">Sort: None</option>
                             <option value="a-z">Sort: A-Z</option>
                             <option value="z-a">Sort: Z-A</option>
                             <option value="newest">Sort: Newest</option>
                             <option value="oldest">Sort: Oldest</option>
                         </select>
+                        <a href="/api/activities/export" class="exportButton">Export</a>
                     </div>
                     <input type="text" id="searchActivities" placeholder="Search activities...">
                     <div class="scrollableContainer" id="activitiesList"></div>

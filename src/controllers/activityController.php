@@ -15,6 +15,8 @@ class ActivityController {
             $this->handleGetActivity();
         } else if ($requestMethod === 'GET' && $requestUrl === '/api/activities/user') {
             $this->handleGetUserActivities();
+        } else if ($requestMethod === 'GET' && $requestUrl === '/api/activities/export') {
+            $this->handleExportActivities();
         } else if ($requestMethod === 'DELETE' && str_starts_with($requestUrl, '/api/activities/delete/')) {
             $this->handleDeleteActivity();
         }
@@ -110,6 +112,28 @@ class ActivityController {
         }
         $activities = Activity::getUserAcitivities($userId);
         $this->sendResponse($activities, 200);
+    }
+
+    private function handleExportActivities() {
+        $userId = $_SESSION['user_id'] ?? '';
+        if (empty($userId)) {
+            $this->sendResponse(['error' => 'You are not logged in!'], 401);
+        }
+        $user = User::getUserById($userId);
+        if (!$user) {
+            unset($_SESSION['user_id']);
+            $this->sendResponse(['error' => 'You are not logged in!'], 401);
+        }
+        $activities = Activity::getUserAcitivities($userId);
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="outside-activities-export.csv"');
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['ID', 'Name', 'Date', 'Length (hours)']);
+        foreach ($activities as $activity) {
+            fputcsv($output, [$activity['id'], $activity['activityName'], $activity['activityDate'], $activity['activityLength']]);
+        }
+        fclose($output);
+        exit;
     }
 
     private function handleDeleteActivity() {
