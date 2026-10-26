@@ -15,6 +15,7 @@
             <a href="/" class="title">Outside Tracker</a>
             <div class="navRight">
                 <a href="/about">About</a>
+                <a href="/swamp">Swamp</a>
                 <a href="/create">Add Activity</a>
                 <button id="logoutButton">Logout</button>
             </div>

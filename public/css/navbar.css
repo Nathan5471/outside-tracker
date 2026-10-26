@@ -30,7 +30,7 @@ nav a.title:hover {
   display: flex;
   flex-direction: row;
   margin-left: auto;
-  gap: 10px;
+  gap: 15px;
 }
 
 nav button {
@@ -39,7 +39,6 @@ nav button {
   font-family: inherit;
   font-size: 24px;
   border: none;
-  padding: 5px 10px;
   cursor: pointer;
   border-radius: 4px;
 }

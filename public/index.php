@@ -22,6 +22,12 @@ if ($requestUrl === '/signup') {
         exit;
     }
     require_once __DIR__ . '/../src/views/about.php';
+} else if ($requestUrl === '/swamp') {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /login');
+        exit;
+    }
+    require_once __DIR__ . '/../src/views/swamp.php';
 } else if ($requestUrl === '/create') {
     if (!isset($_SESSION['user_id'])) {
         header('Location: /login');
